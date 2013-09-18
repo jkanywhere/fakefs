@@ -111,6 +111,14 @@ class FileStatTest < Test::Unit::TestCase
     assert File.mtime("/foo") > mtime
   end
 
+  def test_responds_to_absolute_path_only_on_1_9
+    if RUBY_VERSION > '1.9'
+      assert File.respond_to?(:absolute_path)
+    else
+      assert !File.respond_to?(:absolute_path)
+    end
+  end
+
   def test_responds_to_realpath_only_on_1_9
     if RUBY_VERSION > '1.9'
       assert File.respond_to?(:realpath)
