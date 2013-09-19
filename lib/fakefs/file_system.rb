@@ -90,16 +90,18 @@ module FakeFS
     end
 
     def normalize_path(path)
-      if Pathname.new(path).absolute?
-        File.expand_path(path)
-      else
-        parts = dir_levels + [path]
-        File.expand_path(File.join(*parts))
-      end
+      #if Pathname.new(path).absolute?
+      #  File.expand_path(path)
+      #else
+      #  parts = dir_levels + [path]
+      # Always use two argument expand_path !
+      File.expand_path(path, File.join(*dir_levels) )
+      #  File.expand_path(File.join(*parts))
+      #end
     end
 
     def current_dir
-      find(normalize_path('.'))
+      find('.')
     end
 
     private
@@ -107,7 +109,7 @@ module FakeFS
     def drop_root(path_parts)
       # we need to remove parts from root dir at least for windows and jruby
       return path_parts if path_parts.nil? || path_parts.empty?
-      root = File.expand_path('/').split(File::SEPARATOR).first
+      root = File.expand_path('/', '/').split(File::SEPARATOR).first
       path_parts.shift if path_parts.first == root
       path_parts
     end

@@ -134,8 +134,9 @@ module FakeFS
       end
     end
 
-    def self.expand_path(*args)
-      RealFile.expand_path(*args)
+    def self.expand_path(path, dir=nil)
+      dir = Dir.pwd if dir.nil?
+      RealFile.expand_path(path, dir)
     end
 
     def self.basename(*args)

@@ -1,6 +1,25 @@
 require 'spec_helper'
 
 module FakeFS
+  describe FileSystem do
+    include FakeFS::SpecHelpers
+
+    context '.current_dir' do
+      let(:dir_one) { '/some-dir-one' }
+      let(:dir_two) { '/some-dir-two' }
+
+      before do
+        FileUtils.mkdir dir_one
+        FileUtils.mkdir dir_two
+      end
+
+      it 'knows when i chdir' do
+        Dir.chdir dir_one
+        expect( FileSystem.current_dir.to_s ).to eq dir_one
+      end
+    end
+  end
+
   describe File do
     include FakeFS::SpecHelpers
 
