@@ -453,8 +453,9 @@ module FakeFS
     end
 
     if RUBY_VERSION >= "1.9"
-      def self.absolute_path(*args)
-        RealFile.absolute_path(*args)
+      def self.absolute_path(path, dir=nil)
+        dir = Dir.pwd if dir.nil?
+        RealFile.absolute_path(path, dir)
       end
 
       def self.realpath(*args)
